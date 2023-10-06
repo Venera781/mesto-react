@@ -1,5 +1,5 @@
-import PopupWithForm from "../PopupWithForm";
-import {useDeleteCard} from "../../providers/CardsProvider";
+import PopupWithForm from "./PopupWithForm";
+import {useDeleteCard} from "../providers/CardsProvider";
 import { useCallback } from "react";
 
 const PopupConfirm = ({cardId}) => {

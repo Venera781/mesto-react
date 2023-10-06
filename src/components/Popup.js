@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useMemo } from "react";
-import cx from "../../utils/cx";
-import { usePopup, useSetPopup } from "../../providers/PopupProvider";
-import PopupConfirm from "../PopupConfirm";
-import PopupEditAvatar from "../PopupEditAvatar";
-import PopupEditProfile from "../PopupEditProfile";
-import PopupCard from "../ImagePopup";
-import PopupAddImage from "../PopupAddImage";
+import cx from "../utils/cx";
+import { usePopup, useSetPopup } from "../providers/PopupProvider";
+import PopupConfirm from "./PopupConfirm";
+import PopupEditAvatar from "./PopupEditAvatar";
+import PopupEditProfile from "./PopupEditProfile";
+import PopupCard from "./ImagePopup";
+import PopupAddImage from "./PopupAddImage";
 
 const Popup = () => {
   const type = usePopup();

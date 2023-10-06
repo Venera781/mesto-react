@@ -1,5 +1,5 @@
-import Card from "../Card";
-import { useCards } from "../../providers/CardsProvider";
+import Card from "./Card";
+import { useCards } from "../providers/CardsProvider";
 
 const Cards = () => {
   const elements = useCards();

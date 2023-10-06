@@ -1,4 +1,4 @@
-import PopupWithForm from "../PopupWithForm";
+import PopupWithForm from "./PopupWithForm";
 
 const PopupEditAvatar = () => {
   return (

@@ -1,5 +1,5 @@
-import { useProfile } from "../../providers/ProfileProvider";
-import { useSetPopup } from "../../providers/PopupProvider";
+import { useProfile } from "../providers/ProfileProvider";
+import { useSetPopup } from "../providers/PopupProvider";
 import { useCallback } from "react";
 
 const Profile = () => {

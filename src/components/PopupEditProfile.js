@@ -1,5 +1,5 @@
 import { useState } from "react";
-import PopupWithForm from "../PopupWithForm";
+import PopupWithForm from "./PopupWithForm";
 
 const PopupEditProfile = ({ name, profession }) => {
   const [isSaving, setIsSaving] = useState(false);
