@@ -1,9 +1,10 @@
-import { useProfile } from "../providers/ProfileProvider";
-import { useSetPopup } from "../providers/PopupProvider";
+import { useProfile } from "../contexts/CurrentUserContext";
+//import { useProfile } from "../providers/ProfileProvider";
+import { useSetPopup } from "../contexts/PopupProvider";
 import { useCallback } from "react";
 
 const Profile = () => {
-  const { avatar, name, profession } = useProfile();
+  const { avatar, name, about } = useProfile();
 
   const setPopupType = useSetPopup();
 
@@ -34,7 +35,7 @@ const Profile = () => {
             onClick={handleEditProfile}
           ></button>
         </div>
-        <p className="profile__profession">{profession}</p>
+        <p className="profile__profession">{about}</p>
       </div>
       <button
         className="profile__add-button"

@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useMemo } from "react";
 import cx from "../utils/cx";
-import { usePopup, useSetPopup } from "../providers/PopupProvider";
+import { usePopup, useSetPopup } from "../contexts/PopupProvider";
 import PopupConfirm from "./PopupConfirm";
-import PopupEditAvatar from "./PopupEditAvatar";
-import PopupEditProfile from "./PopupEditProfile";
+import EditAvatarPopup from "./EditAvatarPopup";
+import EditProfilePopup from "./EditProfilePopup";
 import PopupCard from "./ImagePopup";
-import PopupAddImage from "./PopupAddImage";
+import AddPlacePopup from "./AddPlacePopup";
 
 const Popup = () => {
   const type = usePopup();
@@ -15,13 +15,13 @@ const Popup = () => {
       case "element":
         return <PopupCard link={type.link} title={type.title} />;
       case "profile":
-        return <PopupEditProfile />;
+        return <EditProfilePopup />;
       case "addimage":
-        return <PopupAddImage />;
+        return <AddPlacePopup />;
       case "confirm":
         return <PopupConfirm  cardId={type.cardId}/>;
       case "update":
-        return <PopupEditAvatar />;
+        return <EditAvatarPopup />;
 
       default:
         return null;

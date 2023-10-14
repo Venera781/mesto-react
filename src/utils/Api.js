@@ -26,15 +26,17 @@ class Api {
 
   //получить данные пользователя
   getInfoUser() {
-    return this._getData("users/me").then((data) => {
-      return {
-        name: data.name,
-        profession: data.about,
-        avatar: data.avatar,
-        id: data._id,
-      };
-    });
+    return this._getData("users/me").then(this._normalizeUser);
   }
+
+  _normalizeUser = (data) => {
+    return {
+      name: data.name,
+      about: data.about,
+      avatar: data.avatar,
+      id: data._id,
+    };
+  };
 
   _sendData(path, method, body) {
     return fetch(`${this._baseUrl}/${path}`, {
@@ -55,8 +57,10 @@ class Api {
   }
 
   //заменить данные пользователя
-  editProfile(name, profession) {
-    return this._sendData("users/me", "PATCH", { name, about: profession });
+  editProfile(name, about) {
+    return this._sendData("users/me", "PATCH", { name, about }).then(
+      this._normalizeUser
+    );
   }
 
   //удалить карточку (DELETE)
@@ -66,7 +70,9 @@ class Api {
 
   //заменить аватар (PATCH)
   updateAvatar(avatar) {
-    return this._sendData("users/me/avatar", "PATCH", { avatar: avatar });
+    return this._sendData("users/me/avatar", "PATCH", { avatar: avatar }).then(
+      this._normalizeUser
+    );
   }
 
   //Ставить/удалить лайк карточки (DELETE)

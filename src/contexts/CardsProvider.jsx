@@ -16,21 +16,38 @@ export const useDeleteCard = () => {
   const setCards = useContext(CardsSetContext);
   return useCallback(
     (id) => {
-      api
-        .deleteCard(id)
-        .then(() => {
+      return api.deleteCard(id).then(() => {
+        setCards((oldCards) => {
+          return oldCards.filter((card) => {
+            return card._id !== id;
+          });
+        });
+      });
+    },
+    [setCards]
+  );
+};
+
+export const useSendCard = () => {
+  const setCards = useContext(CardsSetContext);
+  const [isUpdating, setIsUpdating] = useState(false);
+  const sendCard = useCallback(
+    (placename, link) => {
+      setIsUpdating(true);
+      return api
+        .addCard(placename, link)
+        .then((newCardData) => {
           setCards((oldCards) => {
-            return oldCards.filter((card) => {
-              return card._id !== id;
-            });
+            return [newCardData, ...oldCards];
           });
         })
-        .catch((error) => {
-          console.log("Ошибка при удалении", error);
+        .finally(() => {
+          setIsUpdating(false);
         });
     },
     [setCards]
   );
+  return { isUpdating, sendCard };
 };
 
 export const useLikeCard = () => {

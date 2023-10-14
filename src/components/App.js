@@ -3,19 +3,19 @@ import Footer from "./Footer";
 import Profile from "./Profile";
 import Cards from "./Cards";
 import Popup from "./Popup";
-import ProfileProvider from "../providers/ProfileProvider";
-import CardsProvider from "../providers/CardsProvider";
-import PopupProvider from "../providers/PopupProvider";
-import PopupEditProfile from "./PopupEditProfile";
-import PopupEditAvatar from "./PopupEditAvatar";
+import CardsProvider from "../contexts/CardsProvider";
+import PopupProvider from "../contexts/PopupProvider";
+import CurrentUserProvider from "../contexts/CurrentUserContext";
+import EditProfilePopup from "./EditProfilePopup";
+import EditAvatarPopup from "./EditAvatarPopup";
 import PopupConfirm from "./PopupConfirm";
-import PopupAddImage from "./PopupAddImage";
+import AddPlacePopup from "./AddPlacePopup";
 import ImagePopup from "./ImagePopup";
 import Main from "./Main";
 
 function App() {
   return (
-    <ProfileProvider>
+    <CurrentUserProvider>
       <CardsProvider>
         <PopupProvider>
           <div className="page__content">
@@ -25,9 +25,9 @@ function App() {
               <Profile />
               <Cards />
               <Popup>
-                <PopupEditProfile />
-                <PopupEditAvatar />
-                <PopupAddImage />
+                <EditProfilePopup />
+                <EditAvatarPopup />
+                <AddPlacePopup />
                 <PopupConfirm />
                 <ImagePopup />
               </Popup>
@@ -36,7 +36,7 @@ function App() {
           </div>
         </PopupProvider>
       </CardsProvider>
-    </ProfileProvider>
+    </CurrentUserProvider>
   );
 }
 

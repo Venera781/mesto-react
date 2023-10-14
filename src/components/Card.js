@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from "react";
-import { useLikeCard } from "../providers/CardsProvider";
-import { useSetPopup } from "../providers/PopupProvider";
-import { useUserId } from "../providers/ProfileProvider";
+import { useLikeCard } from "../contexts/CardsProvider";
+import { useSetPopup } from "../contexts/PopupProvider";
+import { useUserId } from "../contexts/CurrentUserContext";
 import cx from "../utils/cx";
 
 const Card = ({ data }) => {
