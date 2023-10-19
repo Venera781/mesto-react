@@ -1,9 +1,14 @@
-const ImagePopup = ({ title, link }) => {
+import Popup from "./Popup";
+
+const ImagePopup = ({ data, isOpen, onClose }) => {
+  if (!isOpen) {
+    return null;
+  }
   return (
-    <>
-      <img className="popup__image" src={link} alt={title} />
-      <h2 className="popup__title">{title}</h2>
-    </>
+    <Popup onClose={onClose}>
+      <img className="popup__image" src={data?.link} alt={data?.title} />
+      <h2 className="popup__title">{data?.title}</h2>
+    </Popup>
   );
 };
 export default ImagePopup;

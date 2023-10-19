@@ -1,28 +1,12 @@
-import { useProfile } from "../contexts/CurrentUserContext";
-//import { useProfile } from "../providers/ProfileProvider";
-import { useSetPopup } from "../contexts/PopupProvider";
-import { useCallback } from "react";
+import CurrentUserContext from "../contexts/CurrentUserContext";
+import { useContext } from "react";
 
-const Profile = () => {
-  const { avatar, name, about } = useProfile();
-
-  const setPopupType = useSetPopup();
-
-  const handleEditProfile = useCallback(() => {
-    setPopupType({ name: "profile" });
-  }, [setPopupType]);
-
-  const handleEditAvatar = useCallback(() => {
-    setPopupType({ name: "update" });
-  }, [setPopupType]);
-
-  const handleOpenAddImage = useCallback(() => {
-    setPopupType({ name: "addimage" });
-  }, [setPopupType]);
+const Profile = ({ onEditProfile, onEditAvatar, onOpenAddImage }) => {
+  const { avatar, name, about } = useContext(CurrentUserContext);
 
   return (
     <section className="profile">
-      <div className="profile__avatar-wrapper" onClick={handleEditAvatar}>
+      <div className="profile__avatar-wrapper" onClick={onEditAvatar}>
         <img className="profile__avatar" src={avatar} alt={`Фото ${name}`} />
       </div>
       <div className="profile__info">
@@ -32,7 +16,7 @@ const Profile = () => {
             type="button"
             className="profile__edit-button"
             aria-label="Редактировать"
-            onClick={handleEditProfile}
+            onClick={onEditProfile}
           ></button>
         </div>
         <p className="profile__profession">{about}</p>
@@ -41,7 +25,7 @@ const Profile = () => {
         className="profile__add-button"
         type="button"
         aria-label="Добавить фото"
-        onClick={handleOpenAddImage}
+        onClick={onOpenAddImage}
       ></button>
     </section>
   );

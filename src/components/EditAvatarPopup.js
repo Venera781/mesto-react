@@ -1,13 +1,11 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useContext } from "react";
 import PopupWithForm from "./PopupWithForm";
-import { useUpdateAvatar, useProfile } from "../contexts/CurrentUserContext";
-import { useSetPopup } from "../contexts/PopupProvider";
+import CurrentUserContext from "../contexts/CurrentUserContext";
+import Popup from "./Popup";
 
-const EditAvatarPopup = () => {
-  const currentUser = useProfile();
-  const { isUpdating, updateAvatar } = useUpdateAvatar();
+const EditAvatarPopup = ({ onUpdateAvatar, isOpen, onClose }) => {
+  const currentUser = useContext(CurrentUserContext);
   const linkInput = useRef();
-  const setType = useSetPopup();
 
   useEffect(() => {
     if (!linkInput.current) {
@@ -18,30 +16,35 @@ const EditAvatarPopup = () => {
 
   function handleSubmit(e) {
     e.preventDefault();
-    updateAvatar(linkInput.current.value)
-    .then(() => setType(null))
-    .catch((error) => {
-      console.log("Ошибка при отправке аватара", error);
-    })
+    onUpdateAvatar(linkInput.current.value)
+      .then(onClose)
+      .catch((error) => {
+        console.log("Ошибка при отправке аватара", error);
+      });
+  }
+  if (!isOpen) {
+    return null;
   }
   return (
-    <PopupWithForm
-      name="update"
-      title="Обновить аватар"
-      buttonTitle={isUpdating ? "Сохранение..." : "Сохранить"}
-      onSubmit={handleSubmit}
-    >
-      <input
-        className="popup__input"
-        type="url"
-        id="avatar"
-        name="avatar"
-        placeholder="Ссылка на картинку"
-        required
-        ref={linkInput}
-      />
-      <span className="avatar-error popup__input-error popup__input-error_last"></span>
-    </PopupWithForm>
+    <Popup onClose={onClose}>
+      <PopupWithForm
+        name="update"
+        title="Обновить аватар"
+        buttonTitle="Сохранить"
+        onSubmit={handleSubmit}
+      >
+        <input
+          className="popup__input"
+          type="url"
+          id="avatar"
+          name="avatar"
+          placeholder="Ссылка на картинку"
+          required
+          ref={linkInput}
+        />
+        <span className="avatar-error popup__input-error popup__input-error_last"></span>
+      </PopupWithForm>
+    </Popup>
   );
 };
 export default EditAvatarPopup;

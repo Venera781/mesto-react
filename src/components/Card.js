@@ -1,29 +1,26 @@
-import { useCallback, useMemo } from "react";
-import { useLikeCard } from "../contexts/CardsProvider";
-import { useSetPopup } from "../contexts/PopupProvider";
-import { useUserId } from "../contexts/CurrentUserContext";
+import { useCallback, useContext, useMemo } from "react";
 import cx from "../utils/cx";
+import CurrentUserContext from "../contexts/CurrentUserContext";
 
-const Card = ({ data }) => {
-  const setPopupType = useSetPopup();
-  const deleteCard = useCallback(() => {
-    setPopupType({ name: "confirm", cardId: data._id });
-  }, [data, setPopupType]);
+const Card = ({ onCardLike, onDeleteClick, onOpenCard, data }) => {
+  const currentUser = useContext(CurrentUserContext);
+
+  const handleDeleteClick = useCallback(() => {
+    onDeleteClick(data._id);
+  }, [data, onDeleteClick]);
 
   const openCard = useCallback(() => {
-    setPopupType({ name: "element", title: data.name, link: data.link });
-  }, [setPopupType, data]);
+    onOpenCard({ title: data.name, link: data.link });
+  }, [onOpenCard, data]);
 
-  const likeCardById = useLikeCard();
-  const userId = useUserId();
-
+  const cardCreatedByMe = data.owner._id === currentUser.id;
   const cardLikedByMe = useMemo(() => {
-    return data.likes.some((el) => el._id === userId);
-  }, [data, userId]);
-  const cardCreatedByMe = data.owner._id === userId;
-  const likeCard = useCallback(() => {
-    likeCardById(data._id, cardLikedByMe);
-  }, [data, likeCardById, cardLikedByMe]);
+    return data.likes.some((el) => el._id === currentUser.id);
+  }, [data, currentUser]);
+
+  const handleCardLikeClick = useCallback(() => {
+    onCardLike(data._id, cardLikedByMe);
+  }, [onCardLike, data, cardLikedByMe]);
 
   return (
     <article className="element">
@@ -40,7 +37,7 @@ const Card = ({ data }) => {
         )}
         type="button"
         aria-label="Удалить"
-        onClick={deleteCard}
+        onClick={handleDeleteClick}
       ></button>
       <div className="element__wrapper-title">
         <h2 className="element__title">{data.name}</h2>
@@ -52,7 +49,7 @@ const Card = ({ data }) => {
             )}
             type="button"
             aria-label="Ставить лайк"
-            onClick={likeCard}
+            onClick={handleCardLikeClick}
           ></button>
           <p className="element__icon-like">{data.likes.length}</p>
         </div>
