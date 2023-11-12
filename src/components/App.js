@@ -14,7 +14,6 @@ import { useCallback, useEffect, useState, useRef } from "react";
 import api from "../utils/Api";
 
 function App() {
-
   //Методы для работы с данными пользователя
   const [currentUser, setCurrentUser] = useState(() => {
     return {
